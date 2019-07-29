@@ -1,0 +1,154 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.jaardvark</groupId>
+	<artifactId>jcr-utils</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<name>jcr-utils</name>
+	<description>Utility classes for JCR / Jackrabbit</description>
+
+
+	   
+	<properties>
+		<jackrabbit.version>2.12.4</jackrabbit.version>
+		<slf4j.version>1.7.8</slf4j.version>
+		<java.version>1.8</java.version>
+		<java.target.version>1.8</java.target.version>
+	</properties>
+
+
+
+	<dependencies>
+		<dependency>
+		  <groupId>commons-lang</groupId>
+		  <artifactId>commons-lang</artifactId>
+		  <version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.4</version>
+		</dependency>	
+		<dependency>
+		    <groupId>javax.jcr</groupId>
+		    <artifactId>jcr</artifactId>
+		    <version>2.0</version>
+		</dependency>
+	    <dependency>
+	    	<groupId>org.slf4j</groupId>
+	    	<artifactId>slf4j-api</artifactId>
+	    	<version>${slf4j.version}</version>
+	    </dependency>
+	    <dependency>
+	    	<groupId>org.slf4j</groupId>
+	    	<artifactId>slf4j-log4j12</artifactId>
+	    	<version>${slf4j.version}</version>
+	    </dependency>
+	    <dependency>
+	    	<groupId>org.slf4j</groupId>
+	    	<artifactId>jcl-over-slf4j</artifactId>
+	    	<version>${slf4j.version}</version>
+	    </dependency>
+	    
+	    <!-- tests run with embedded jackrabbit -->
+	    <dependency>
+	    	<groupId>org.apache.jackrabbit</groupId>
+	    	<artifactId>jackrabbit-core</artifactId>
+	    	<version>${jackrabbit.version}</version>
+	    	<scope>provided</scope>
+	    </dependency>
+	    <dependency>
+	    	<groupId>org.apache.jackrabbit</groupId>
+	    	<artifactId>jackrabbit-jcr-commons</artifactId>
+	    	<version>${jackrabbit.version}</version>
+	    	<scope>provided</scope>
+	    </dependency>
+	    <dependency>
+	    	<groupId>org.apache.jackrabbit</groupId>
+	    	<artifactId>jackrabbit-spi</artifactId>
+	    	<version>${jackrabbit.version}</version>
+	    	<scope>provided</scope>
+	    </dependency>
+	    <dependency>
+	    	<groupId>org.apache.jackrabbit</groupId>
+	    	<artifactId>jackrabbit-spi-commons</artifactId>
+	    	<version>${jackrabbit.version}</version>
+	    	<scope>provided</scope>
+	    </dependency>	    
+	    <dependency>
+	    	<groupId>org.apache.jackrabbit</groupId>
+	    	<artifactId>jackrabbit-api</artifactId>
+	    	<version>${jackrabbit.version}</version>
+	    	<scope>provided</scope>
+	    </dependency>
+	    <dependency>
+	    	<groupId>junit</groupId>
+	    	<artifactId>junit</artifactId>
+	    	<version>4.11</version>
+	    	<scope>test</scope>
+	    </dependency>
+	    
+	    <dependency>
+		    <groupId>javax.inject</groupId>
+		    <artifactId>javax.inject</artifactId>
+		    <version>1</version>
+		    <scope>provided</scope>
+		</dependency>
+	    
+	</dependencies>
+
+
+	<build>
+		<resources>
+			<resource>
+			<directory>src/main/resources</directory>
+				<includes><include>**/*</include></includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.target.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	
+	<licenses>
+	  <license>
+	    <name>BSD License</name>
+	    <url>src/main/resources/LICENSE.txt</url>
+	    <distribution>repo</distribution>
+	    <comments>Use at your own risk, your mileage may vary.</comments>
+	  </license>
+	</licenses>
+	
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+	
+</project>

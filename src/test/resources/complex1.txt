@@ -1,0 +1,13 @@
+
+complex1 nt:unstructured 0 {
+	string prop1: "test value1\n\n<a href=\"http://foo\">foo</a>"
+	date prop2 : 2014-04-14T22:15:00.000+00:00
+	subnode1 nt:unstructured 0 {
+		long * prop1:  1,2,3,4,5,6,7,8,9,10
+		string prop2: "hello"
+	}
+	subnode2 nt:unstructured 1 {
+		string prop1: "anotherprop"
+	}
+}
+

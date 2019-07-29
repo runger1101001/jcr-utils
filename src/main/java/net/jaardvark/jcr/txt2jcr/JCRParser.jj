@@ -1,0 +1,208 @@
+
+
+
+// global options
+options {
+	STATIC = false;
+}
+
+
+
+
+PARSER_BEGIN(JCRParser)
+	package net.jaardvark.jcr.txt2jcr.parser;
+	
+	import java.io.Reader;
+	import net.jaardvark.jcr.txt2jcr.JCRParseEventHandler;
+	import java.util.GregorianCalendar;
+	import java.text.DateFormat;
+	import java.util.ArrayList;
+	import java.util.Date;
+	import java.util.Calendar;
+	import java.util.GregorianCalendar;
+	import net.jaardvark.jcr.txt2jcr.Tuple;
+	import org.apache.commons.lang.StringEscapeUtils;
+	import org.apache.jackrabbit.util.ISO8601;
+	
+	public class JCRParser {
+		protected JCRParseEventHandler handler = null;
+		
+		public JCRParseEventHandler getHandler(){ return handler; }
+		public void setHandler(JCRParseEventHandler handler){ this.handler = handler; }
+		
+		public void handleProperty(String propType, String propName, Object value) throws ParseException {
+			try {
+				if (value instanceof ArrayList)
+					handler.property(propName, propType, (ArrayList)value);
+				else
+					handler.property(propName, propType, (Object)value);
+			}
+			catch (Exception ex){
+				 ParseException e = new ParseException("Exception processing parsed content at property "+propName+".");
+				 e.initCause(ex);
+				 throw e;
+			}
+		}
+		
+		public void handleNodeBegin(String nodeName, String primaryType, String nodeOrderStr) throws ParseException {
+			try {
+				int nodeOrder = Integer.parseInt(nodeOrderStr);
+				handler.nodeBegin(nodeName, primaryType, nodeOrder);
+			}
+			catch (Exception ex){
+				 ParseException e = new ParseException("Exception processing parsed content for node "+nodeName+".");
+				 e.initCause(ex);
+				 throw e;
+			}
+		}
+		
+		public void handleNodeEnd() throws ParseException {
+			try {
+				handler.nodeEnd();
+			}
+			catch (Exception ex){
+				 ParseException e = new ParseException("Exception processing parsed content.");
+				 e.initCause(ex);
+				 throw e;
+			}
+		}
+		
+		public void handleFinish() throws ParseException {
+			try {
+				handler.finish();
+			}
+			catch (Exception ex){
+				 ParseException e = new ParseException("Exception processing parsed content.");
+				 e.initCause(ex);
+				 throw e;
+			}
+		}
+		
+		public String getUnescapedString(String escapedString){
+			if (escapedString.length() < 3)
+				return "";
+			String str = escapedString.substring(1,escapedString.length()-1);
+			str = StringEscapeUtils.unescapeJava(str);
+			return str;
+		}
+		
+		public Calendar getCalendar(String dateStr) throws ParseException{
+			//try {
+				//Date d = DateFormat.getDateTimeInstance().parse(dateStr);
+	            //Calendar c = new GregorianCalendar();
+	            //c.setTime(d);
+	            //return c;
+			//} catch (java.text.ParseException ex) {
+			//	 ParseException e = new ParseException("Exception processing parsed content.");
+	        //     e.initCause(ex);
+	        //     throw e;
+			//}
+			Calendar c = ISO8601.parse(dateStr);
+			if (c==null)
+				throw new ParseException("Cannot parse date value "+dateStr);
+			return c;
+        }
+		
+		public static void parse(Reader in, JCRParseEventHandler handler) throws ParseException, TokenMgrError {
+			JCRParser parser = new JCRParser(in);
+			parser.setHandler(handler);
+			parser.NODES();
+		}
+	
+	}
+PARSER_END(JCRParser)
+
+
+
+// productions
+
+void NODES() : {}
+{
+	( NODE() )+ { handleFinish(); }
+}
+
+
+void NODE() : {
+	Token nn;
+	Token nt = null;
+	Token no;
+}
+{
+	nn = <JCRNAME> ( nt = <JCRNAME> )? no = <LONG> { handleNodeBegin(nn.image, nt.image, no.image); } <NODEBEGIN> ( PROPERTY() )+ ( NODE() )* <NODEEND> { handleNodeEnd(); }
+}
+
+
+
+void PROPERTY() : {
+	Token propType;
+	Tuple<Object> val;
+}
+{
+	propType = <PROPTYPE> val = PROPERTYVALUES() { handleProperty( propType.image, (String)val.get(0), val.get(1)); }
+}
+
+
+
+Tuple<Object> PROPERTYVALUES() : {
+	Token propName;
+	Object val;
+	ArrayList<Object> vals = new ArrayList<Object>();
+}
+{
+	<PROPMULTIPLE> propName = <PROPNAME> <COLON> val = PROPERTYVALUE() { vals.add(val); } (LOOKAHEAD(2) <PROPVALUESEPERATOR> val = PROPERTYVALUE() { vals.add(val); } )* ( <PROPVALUESEPERATOR> )? { return new Tuple<Object>(propName.image,vals); }
+|
+	propName = <PROPNAME> <COLON> val = PROPERTYVALUE() { return new Tuple<Object>(propName.image,val); }
+}
+
+
+
+Object PROPERTYVALUE() : {
+	Token tok;
+}
+{
+	tok = <LONG> { return Long.valueOf(tok.image); }
+|
+	tok = <DOUBLE> { return Double.valueOf(tok.image); }
+|
+	tok = <JCRNAME> { return tok.image; }
+|
+	tok = <BOOLEAN> { return Boolean.valueOf(tok.image); }
+|
+	tok = <STRING> { return getUnescapedString(tok.image); }
+|
+	tok = <DATE> { return getCalendar(tok.image); }
+/*
+|
+	<BINARY>
+*/
+}
+
+
+
+// tokens
+
+MORE : { < ["\""] > : insideString }
+<insideString> MORE : { < ["\\"] > : afterQuote  }
+<insideString> TOKEN : { < STRING : ["\""] > : DEFAULT }
+<insideString> MORE : { < ~["\n","\r"] > }
+<afterQuote> MORE : { < ~["\n","\r"] > : insideString }
+
+
+SKIP : { " " | "\t" }
+SKIP : { < NEWLINE : "\n" | "\r" | "\r\n" > }
+TOKEN [IGNORE_CASE] : { < PROPTYPE : "BINARY" | "LONG" | "DOUBLE" | "DATE" | "BOOLEAN" | "NAME" | "PATH" | "STRING" | "REFERENCE" > : insideProp }
+TOKEN : { < NODEBEGIN : "{" >  }
+TOKEN : { < NODEEND : "}" > }
+TOKEN : { < PROPVALUESEPERATOR : "," > }
+TOKEN : { < COLON : ":" > }
+TOKEN : { < LONG : ("-")?(["0"-"9"])+ > }
+TOKEN : { < DOUBLE : ("-")?(["0"-"9"])+ > }
+TOKEN [IGNORE_CASE] : { < BOOLEAN : "true" | "false" > }
+TOKEN [IGNORE_CASE] : { < DATE : ["0"-"9"]["0"-"9"]["0"-"9"]["0"-"9"]["-"]["0"-"9"]["0"-"9"]["-"]["0"-"9"]["0"-"9"]["T"]["0"-"9"]["0"-"9"][":"]["0"-"9"]["0"-"9"][":"]["0"-"9"]["0"-"9"]["."]["0"-"9"]["0"-"9"]["0"-"9"]["+","-"]["0"-"9"]["0"-"9"][":"]["0"-"9"]["0"-"9"] > }
+TOKEN : { < JCRNAME : (<JCRNAMESTRING>":")?<JCRNAMESTRING> > }
+TOKEN : { < #JCRNAMESTRING : (~["\"", ",", "\\", "/", ":", "[", "]", "{", "}", "|", "*", " ", "\t", "\n", "\r"])+ > }
+<insideProp> TOKEN : { < PROPNAME : (<JCRNAMESTRING>":")?<JCRNAMESTRING> > :DEFAULT }
+<insideProp> TOKEN : { < PROPMULTIPLE : "*" > }
+<insideProp> SKIP : { " " | "\t" }
+
+

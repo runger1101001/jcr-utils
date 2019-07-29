@@ -1,0 +1,8 @@
+
+simple1 nt:unstructured 0 {
+	string prop1 : "test value1"
+	string prop2 : "test value2"
+	long prop3 : 42
+	boolean prop4 : true
+}
+

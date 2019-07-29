@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jcr-utils" default="generate-parser">	
+    <description>ant build for calling javacc to regenerate the parser</description>	
+	
+	<target name="generate-parser" description="Rebuild the parser from the .jj file">
+		<javacc javacchome="../javacc-5.0"
+				outputdirectory="src/net/jaardvark/jcr/txt2jcr/parser"
+				target="src/net/jaardvark/jcr/txt2jcr/JCRParser.jj" />
+	</target>
+	
+</project>
