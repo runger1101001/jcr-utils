@@ -33,7 +33,7 @@ PARSER_BEGIN(JCRParser)
 		public void handleProperty(String propType, String propName, Object value) throws ParseException {
 			try {
 				if (value instanceof ArrayList)
-					handler.property(propName, propType, (ArrayList)value);
+					handler.multipleProperty(propName, propType, (ArrayList)value);
 				else
 					handler.property(propName, propType, (Object)value);
 			}

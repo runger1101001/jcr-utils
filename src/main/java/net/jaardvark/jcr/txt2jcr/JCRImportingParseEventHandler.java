@@ -86,7 +86,7 @@ public class JCRImportingParseEventHandler implements JCRParseEventHandler {
 	public void property(String name, String type, Object value) throws Exception {
 		AttributesImpl atts = new AttributesImpl();
 		atts.addAttribute(JCR_SV, "name", null, "NMTOKEN", name);
-		//type = StringUtils.capitalize(type.toLowerCase()); // normalize type-name
+		type = StringUtils.capitalize(type.toLowerCase()); // normalize type-name
 		int propType = PropertyType.valueFromName(type);
 		atts.addAttribute(JCR_SV, "type", null, "NMTOKEN", type);	
 		contentHandler.startElement(JCR_SV, "property", null, atts);
@@ -153,7 +153,7 @@ public class JCRImportingParseEventHandler implements JCRParseEventHandler {
 	public void multipleProperty(String name, String type, List<? extends Object> values) throws Exception {
 		AttributesImpl atts = new AttributesImpl();
 		atts.addAttribute(JCR_SV, "name", null, "NMTOKEN", name);
-		type = StringUtils.capitalize(type.toLowerCase()); // normalize type-name
+		//type = StringUtils.capitalize(type.toLowerCase()); // normalize type-name
 		int propType = PropertyType.valueFromName(type);
 		atts.addAttribute(JCR_SV, "type", null, "NMTOKEN", type);
 		atts.addAttribute(JCR_SV, "multiple", null, "NMTOKEN", "true");

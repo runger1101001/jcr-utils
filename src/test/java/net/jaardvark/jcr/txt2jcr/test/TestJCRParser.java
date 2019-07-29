@@ -36,11 +36,11 @@ public class TestJCRParser {
 		IOUtils.closeQuietly(fis);
 	}
 	
-	@Test
-	public void parseExportedNode() throws ParseException, TokenMgrError, FileNotFoundException{
-		FileReader fis = new FileReader("src/test/resources/net/jaardvark/jcr/txt2jcr/test/complex2.txt");
-		JCRParseEventHandler handler = new DebugParseEventHandler();
-		JCRParser.parse(fis, handler);
-		IOUtils.closeQuietly(fis);
-	}
+//	@Test - requires order of tests, bad practice - TODO think about and change me
+//	public void parseExportedNode() throws ParseException, TokenMgrError, FileNotFoundException{
+//		FileReader fis = new FileReader("src/test/resources/net/jaardvark/jcr/txt2jcr/test/complex2.txt");
+//		JCRParseEventHandler handler = new DebugParseEventHandler();
+//		JCRParser.parse(fis, handler);
+//		IOUtils.closeQuietly(fis);
+//	}
 }
