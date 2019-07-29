@@ -1,13 +1,13 @@
 
-+ JCR Utils
+# JCR Utils
 
 A collection of useful classes in conjunction with JCR, specifically its reference implementation Apache Jackrabbit.
 
-++ Licence
+## Licence
 
 BSD License. Use at your own risk, without express or implied warranty.
 
-++ What?
+## What?
 
 Additional predicate classes - these are generally useful, and can also be composed into "networks" of predicates to realize fairly complex queries on JCR structures.
 
@@ -17,7 +17,7 @@ Bean2Node - transforms java beans to JCR using a few simple annotations to confi
 
 JcrImportingParseEventHandler / JCRWritingParseEventHandler - in case you have been wondering how to (efficiently) move large amounts of data into JCR.
 
-++ Development Status
+## Development Status
 
 In (slow) development - parts of this code have seen years of active use, while other parts are largely untested. YMMV. 
 
