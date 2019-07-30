@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.jaardvark</groupId>
 	<artifactId>jcr-utils</artifactId>
-	<version>2.0.0</version>
+	<version>2.0.1-SNAPSHOT</version>
 	<name>jcr-utils</name>
 	<description>Utility classes for JCR / Jackrabbit</description>
 
