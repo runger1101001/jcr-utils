@@ -166,16 +166,16 @@ public class AnnotationBasedBeanPropertyJcrInfoExtractor implements BeanProperty
 
 	
 	/**
-	 *  java.util.Date, java.time.Instant --> DATE
-	 *  String, char[] --> STRING
-	 *  BigDecimal --> DECIMAL
-	 *  Double, double, Float, float --> DOUBLE
-	 *  Long, long, Integer, int, Short, short, byte --> LONG
-	 *  byte[] --> BINARY
-	 *  URI, URL --> URI
-	 *  Boolean, boolean --> BOOLEAN
-	 *  Enum<?> --> STRING (by name)
-	 *  ? --> STRING (using toString)
+	 *  java.util.Date, java.time.Instant --&gt; DATE
+	 *  String, char[] --&gt; STRING
+	 *  BigDecimal --&gt; DECIMAL
+	 *  Double, double, Float, float --&gt; DOUBLE
+	 *  Long, long, Integer, int, Short, short, byte --&gt; LONG
+	 *  byte[] --&gt; BINARY
+	 *  URI, URL --&gt; URI
+	 *  Boolean, boolean --&gt; BOOLEAN
+	 *  Enum&lt;?&gt; --&gt; STRING (by name)
+	 *  ? --&gt; STRING (using toString)
 	 * @param clazz input bean property type
 	 * @return output jcr property type
 	 */

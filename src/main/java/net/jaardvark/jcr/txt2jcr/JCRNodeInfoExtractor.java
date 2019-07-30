@@ -24,7 +24,7 @@ public class JCRNodeInfoExtractor implements JCRParseEventHandler, NodeInformati
 	
 
 	/**
-	 * @see net.jaardvark.jcr.txt2jcr.JCRParseEventHandler#nodeBegin(java.lang.String, java.lang.String)
+	 * @see net.jaardvark.jcr.txt2jcr.JCRParseEventHandler#nodeBegin(java.lang.String, java.lang.String, int)
 	 */
 	@Override
 	public void nodeBegin(String name, String primaryType, int nodeOrder) throws Exception {
@@ -62,7 +62,7 @@ public class JCRNodeInfoExtractor implements JCRParseEventHandler, NodeInformati
 	}
 
 	/**
-	 * @see net.jaardvark.jcr.txt2jcr.JCRParseEventHandler#property(java.lang.String, java.lang.String, java.util.List)
+	 * @see net.jaardvark.jcr.txt2jcr.JCRParseEventHandler#multipleProperty(java.lang.String, java.lang.String, java.util.List)
 	 */
 	@Override
 	public void multipleProperty(String name, String type, List<? extends Object> values) throws Exception {

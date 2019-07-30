@@ -30,7 +30,7 @@ public class NamedPropertyPredicate extends PropertyPredicateBase {
 	
 	
 	/**
-	 * @see PropertyPredicateBase.jcr.jcr2txt.PropertyFilter#evaluate(javax.jcr.Property)
+	 * see PropertyPredicateBase.jcr.jcr2txt.PropertyFilter#evaluate(javax.jcr.Property)
 	 */
 	@Override
 	public boolean evaluate(Property p) {

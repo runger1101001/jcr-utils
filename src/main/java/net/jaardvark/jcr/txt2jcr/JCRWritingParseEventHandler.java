@@ -66,12 +66,12 @@ public class JCRWritingParseEventHandler implements JCRParseEventHandler {
 	
 	
 	/**
-	 * @throws RepositoryException 
-	 * @throws PathNotFoundException 
-	 * @throws ConstraintViolationException 
-	 * @throws LockException 
-	 * @throws VersionException 
-	 * @see jaardvark.jcr.txt2jcr.JCRParseEventHandler#nodeBegin(java.lang.String)
+	 * @throws RepositoryException  on error
+	 * @throws PathNotFoundException  on error
+	 * @throws ConstraintViolationException  on error
+	 * @throws LockException  on error
+	 * @throws VersionException  on error
+	 * see jaardvark.jcr.txt2jcr.JCRParseEventHandler#nodeBegin(java.lang.String, java.lang.String, int)
 	 */
 	@Override
 	public void nodeBegin(String name, String primaryType, int nodeOrder) throws VersionException, LockException, ConstraintViolationException, PathNotFoundException, RepositoryException {
@@ -85,10 +85,10 @@ public class JCRWritingParseEventHandler implements JCRParseEventHandler {
 	}
 
 	/**
-	 * @throws RepositoryException 
-	 * @throws AccessDeniedException 
-	 * @throws ItemNotFoundException 
-	 * @see jaardvark.jcr.txt2jcr.JCRParseEventHandler#nodeEnd()
+	 * @throws RepositoryException  on error
+	 * @throws AccessDeniedException  on error
+	 * @throws ItemNotFoundException  on error
+	 * see jaardvark.jcr.txt2jcr.JCRParseEventHandler#nodeEnd()
 	 */
 	@Override
 	public void nodeEnd() throws ItemNotFoundException, AccessDeniedException, RepositoryException {
@@ -96,13 +96,13 @@ public class JCRWritingParseEventHandler implements JCRParseEventHandler {
 	}
 
 	/**
-	 * @throws RepositoryException 
-	 * @throws ConstraintViolationException 
-	 * @throws LockException 
-	 * @throws VersionException 
-	 * @throws ValueFormatException 
-	 * @throws IOException 
-	 * @see jaardvark.jcr.txt2jcr.JCRParseEventHandler#property(java.lang.String, java.lang.String, java.lang.Object)
+	 * @throws RepositoryException  on error
+	 * @throws ConstraintViolationException  on error
+	 * @throws LockException  on error
+	 * @throws VersionException  on error
+	 * @throws ValueFormatException  on error
+	 * @throws IOException  on error
+	 * see jaardvark.jcr.txt2jcr.JCRParseEventHandler#property(java.lang.String, java.lang.String, java.lang.Object)
 	 */
 	@Override
 	public void property(String name, String type, Object value) throws ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException, IOException {
@@ -154,13 +154,13 @@ public class JCRWritingParseEventHandler implements JCRParseEventHandler {
 
 
 	/**
-	 * @throws RepositoryException 
-	 * @throws LockException 
-	 * @throws ConstraintViolationException 
-	 * @throws VersionException 
-	 * @throws NoSuchNodeTypeException 
-	 * @throws IOException 
-	 * @see net.jaardvark.jcr.txt2jcr.JCRParseEventHandler#property(java.lang.String, java.lang.String, java.util.List)
+	 * @throws RepositoryException on error
+	 * @throws LockException  on error
+	 * @throws ConstraintViolationException  on error
+	 * @throws VersionException  on error
+	 * @throws NoSuchNodeTypeException  on error
+	 * @throws IOException  on error
+	 * see net.jaardvark.jcr.txt2jcr.JCRParseEventHandler#multipleProperty(java.lang.String, java.lang.String, java.util.List)
 	 */
 	@Override
 	public void multipleProperty(String name, String type, List<? extends Object> values) throws NoSuchNodeTypeException, VersionException, ConstraintViolationException, LockException, RepositoryException, IOException {

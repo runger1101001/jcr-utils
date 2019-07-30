@@ -72,7 +72,7 @@ public class JCR2Text {
 	 * @param nodeOrder order of node among siblings
 	 * @return the node, as text
 	 * @throws RepositoryException
-	 * @throws IOException
+	 * @throws IOException if an io error occurs
 	 */
 	public String nodeAsText(Node node, NodePredicate nFilter, PropertyPredicateBase pFilter, int nodeOrder) throws RepositoryException, IOException {
 		return nodeAsText(node, nFilter, pFilter, nodeOrder, 0);
@@ -84,7 +84,7 @@ public class JCR2Text {
 	 * @param filter the node filter which determines which nodes are included and which are omitted
 	 * @return a text version thereof
 	 * @throws RepositoryException 
-	 * @throws IOException 
+	 * @throws IOException if an io error occurs
 	 */
 	public String nodeAsText(Node node, NodePredicate filter, PropertyPredicateBase pFilter, int nodeOrder, int indentLevel) throws RepositoryException, IOException {
 		StringBuffer text = new StringBuffer();
