@@ -36,8 +36,7 @@ public class CompareValuePredicate extends PropertyPredicateBase {
 			case NOTEQUAL:
 				return !ValueComparator.equals(lhsV, rhsV);
 			case REGEX:
-				// TODO handle regex
-				break;
+				return ValueComparator.regex(lhsV, rhsV);
 			}
 		}
 		catch (RepositoryException e){

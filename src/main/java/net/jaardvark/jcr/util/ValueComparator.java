@@ -1,6 +1,7 @@
 package net.jaardvark.jcr.util;
 
 import java.util.Comparator;
+import java.util.regex.Pattern;
 
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
@@ -18,18 +19,18 @@ public class ValueComparator implements Comparator<Value> {
 		if (o2!=null && o1==null)
 			return 1;
 		try {
-		if (o1.getType()==o2.getType() && o1.getType()==PropertyType.DATE){
-			// compare dates
-			return o1.getDate().compareTo(o2.getDate());
-		}
-		if ( (o1.getType()==PropertyType.DOUBLE || o1.getType()==PropertyType.LONG)
-			&& (o2.getType()==PropertyType.DOUBLE || o2.getType()==PropertyType.LONG)){
-			// compare numbers
-			if (o2.getDouble()==o1.getDouble()) return 0;
-			if (o2.getDouble()>o1.getDouble()) return 1;
-			return -1;
-		}
-		return o1.getString().compareTo(o2.getString());
+			if (o1.getType()==o2.getType() && o1.getType()==PropertyType.DATE){
+				// compare dates
+				return o1.getDate().compareTo(o2.getDate());
+			}
+			if ( (o1.getType()==PropertyType.DOUBLE || o1.getType()==PropertyType.LONG)
+				&& (o2.getType()==PropertyType.DOUBLE || o2.getType()==PropertyType.LONG)){
+				// compare numbers
+				if (o2.getDouble()==o1.getDouble()) return 0;
+				if (o2.getDouble()>o1.getDouble()) return 1;
+				return -1;
+			}
+			return o1.getString().compareTo(o2.getString());
 		}
 		catch (Exception ex){
 			throw new RuntimeException(ex);
@@ -112,6 +113,16 @@ public class ValueComparator implements Comparator<Value> {
 			return o1.getDouble() <= o2.getDouble();
 		}
 		return false;
+	}
+
+
+
+	public static boolean regex(Value lhsV, Value rhsV) throws ValueFormatException, IllegalStateException, RepositoryException {
+		if (lhsV==null || rhsV==null)
+			return false; // can't match null by regex
+		if (lhsV.getType()!=PropertyType.STRING || rhsV.getType()!=PropertyType.STRING)
+			return false;
+		return Pattern.matches(rhsV.getString(), lhsV.getString());
 	}
 	
 
