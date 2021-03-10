@@ -10,7 +10,7 @@
         import java.util.Calendar;
         import java.util.GregorianCalendar;
         import net.jaardvark.jcr.txt2jcr.Tuple;
-        import org.apache.commons.lang.StringEscapeUtils;
+        import org.apache.commons.lang3.StringEscapeUtils;
         import org.apache.jackrabbit.util.ISO8601;
 
         public class JCRParser implements JCRParserConstants {

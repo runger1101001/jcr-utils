@@ -5,7 +5,7 @@ package net.jaardvark.jcr.txt2jcr.test;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import net.jaardvark.jcr.txt2jcr.JCRParseEventHandler;
 

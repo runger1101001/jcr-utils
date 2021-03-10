@@ -17,7 +17,6 @@ import javax.jcr.lock.LockException;
 import javax.jcr.nodetype.ConstraintViolationException;
 import javax.jcr.version.VersionException;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.jackrabbit.util.ISO8601;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
