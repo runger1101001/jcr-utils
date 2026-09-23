@@ -9,7 +9,7 @@
 
 	   
 	<properties>
-		<jackrabbit.version>2.20.17</jackrabbit.version>
+		<jackrabbit.version>2.22.2</jackrabbit.version>
 		<slf4j.version>1.7.30</slf4j.version>
 		<java.version>1.8</java.version>
 		<java.target.version>1.8</java.target.version>
